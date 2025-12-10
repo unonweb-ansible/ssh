@@ -1,21 +1,17 @@
 ---
-- name: ssh role
+- name: sshd role
   tags:
-    - ssh
+    - sshd
   block:
 
-  # ssh.config
-  - when: 
-    - ssh.config.src != None
-    - ssh.config.src != false
-    block:
-
-    - name: Copy sshd_config
-      become: true
-      notify: Restart ssh-server
-      ansible.builtin.copy:
-        src: "{{ ssh.config.src }}"
-        dest: /etc/ssh/sshd_config
-        owner: root
-        group: root
-        mode: "u=rw,g=,o="
+  # sshd_config
+  - when: sshd_config != None
+    name: Copy {{ sshd_config }}
+    become: true
+    notify: Reload ssh.service
+    ansible.builtin.copy:
+      src: "{{ sshd_config }}"
+      dest: /etc/ssh/sshd_config
+      owner: root
+      group: root
+      mode: "u=rw,g=,o="

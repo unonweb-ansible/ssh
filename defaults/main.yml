@@ -1,5 +1,4 @@
 ---
-ssh:
-  restart_service: false
-  config:
-    src:
+sshd_config:
+sshd_handler_restart: false
+sshd_handler_reload: true
